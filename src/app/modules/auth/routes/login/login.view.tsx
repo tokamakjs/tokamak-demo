@@ -28,7 +28,7 @@ export const LoginView = () => {
       <Box
         sx={() => ({
           height: '100vh',
-          width: '100%',
+          width: '100vw',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -38,10 +38,7 @@ export const LoginView = () => {
         {isLoading ? (
           'Loading...'
         ) : (
-          <Box
-            sx={() => ({
-              width: 500,
-            })}>
+          <Box sx={() => ({ width: 500 })}>
             <form
               method="post"
               onSubmit={async (e) => {
@@ -74,19 +71,19 @@ export const LoginView = () => {
               </FormControl>
               <Box
                 sx={() => ({
+                  m: 2,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  m: 2,
                 })}>
                 <Box sx={() => ({ m: 2 })}>
                   <Button type="submit">Login</Button>
                 </Box>
                 <Divider />
                 <Box sx={() => ({ m: 2 })}>
-                  <A href="/sign-up">
-                    <Link>Sign up</Link>
-                  </A>
+                  <Link component={A} href="/sign-up">
+                    Sign up
+                  </Link>
                 </Box>
               </Box>
             </form>
@@ -94,13 +91,7 @@ export const LoginView = () => {
         )}
       </Box>
       <Modal open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <ModalDialog
-          sx={{
-            maxWidth: 500,
-            borderRadius: 'md',
-            p: 3,
-            boxShadow: 'lg',
-          }}>
+        <ModalDialog sx={{ maxWidth: 500, borderRadius: 'md', p: 3, boxShadow: 'lg' }}>
           <ModalClose
             variant="outlined"
             sx={{

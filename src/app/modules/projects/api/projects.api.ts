@@ -9,10 +9,12 @@ const fakeProjects = [
   {
     id: '1',
     title: 'Foo project',
+    description: 'Nullam eget orci pellentesque massa lacinia dapibus in sit amet nunc.',
   },
   {
     id: '2',
     title: 'Bar project',
+    description: 'Sed tincidunt justo vitae risus ullamcorper ullamcorper. Nulla tristique.',
   },
 ];
 

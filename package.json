@@ -20,7 +20,7 @@
     "@mui/joy": "^5.0.0-alpha.84",
     "@tokamakjs/common": "^0.7.6",
     "@tokamakjs/injection": "^0.7.0",
-    "@tokamakjs/react": "^0.7.6",
+    "@tokamakjs/react": "^0.7.7",
     "class-transformer": "^0.5.1",
     "framer-motion": "^10.12.16",
     "immer": "^10.0.2",

@@ -7,16 +7,23 @@ import { AuthErrorHandler } from '~/app/modules/auth/handlers/auth-error.handler
 import { AuthService } from '~/app/modules/auth/services/auth.service';
 
 import { Project } from '../../api/models/project';
+import { Task } from '../../api/models/task';
 import { ProjectsService } from '../../services/projects.service';
+import { TasksService } from '../../services/tasks.service';
 import { ProjectsView } from './projects.view';
 
 @Controller({ view: ProjectsView, guards: [AuthGuard], handlers: [AuthErrorHandler] })
 export class ProjectsController {
   @state private _projects = [] as Array<Project>;
+  @state private _tasks = [] as Array<Task>;
   @state private _isLoadingProjects = false;
 
   get projects() {
     return this._projects;
+  }
+
+  get tasks() {
+    return this._tasks;
   }
 
   get isLoadingProjects() {
@@ -27,6 +34,7 @@ export class ProjectsController {
     private readonly _authService: AuthService,
     private readonly _router: RouterService,
     private readonly _projectsService: ProjectsService,
+    private readonly _tasksService: TasksService,
   ) {}
 
   @onDidMount()
@@ -41,6 +49,7 @@ export class ProjectsController {
     const subs = new Subscription();
 
     subs.add(this._projectsService.projects$.subscribe((v) => (this._projects = v)));
+    subs.add(this._tasksService.tasks$.subscribe((v) => (this._tasks = v)));
 
     return () => {
       subs.unsubscribe();
