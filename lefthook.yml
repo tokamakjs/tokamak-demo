@@ -1,0 +1,9 @@
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+pre-commit:
+  parallel: false
+  commands:
+    lint:
+      glob: "*.{ts,tsx}"
+      run: npx eslint --format node_modules/eslint-formatter-pretty --max-warnings=0 {staged_files}
