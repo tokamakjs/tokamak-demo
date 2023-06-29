@@ -14,19 +14,19 @@ const fakeTasks = [
 @Injectable()
 export class TasksApi {
   public async fetchTasksForProject(projectId: string): Promise<Array<Task>> {
-    await delay(1000);
+    await delay(500);
     return fakeTasks.filter((t) => t.projectId === projectId).map(Task.fromJson);
   }
 
   public async createTask(projectId: string, title: string): Promise<Task> {
-    await delay(1000);
+    await delay(500);
     const newTask = { id: v4(), title, projectId, done: false };
     fakeTasks.push(newTask);
     return Task.fromJson(newTask);
   }
 
   public async updateTask(taskId: string, data: Partial<Task>): Promise<Task> {
-    await delay(1000);
+    await delay(500);
     const task = fakeTasks.find((t) => t.id === taskId);
 
     if (task == null) {
