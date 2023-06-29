@@ -3,6 +3,7 @@ import { Controller, onDidMount, state } from '@tokamakjs/react';
 import { Subscription } from 'rxjs';
 
 import { AuthGuard } from '~/app/modules/auth/guards/auth.guard';
+import { AuthService } from '~/app/modules/auth/services/auth.service';
 
 import { Project } from '../../api/models/project';
 import { Task } from '../../api/models/task';
@@ -36,6 +37,7 @@ export class ProjectController {
     private readonly _projectsService: ProjectsService,
     private readonly _tasksService: TasksService,
     private readonly _router: RouterService,
+    private readonly _authService: AuthService,
   ) {}
 
   @onDidMount()
@@ -85,5 +87,10 @@ export class ProjectController {
 
   public async uncheckTask(id: string): Promise<void> {
     await this._tasksService.updateTask(id, { done: false });
+  }
+
+  public logout(): void {
+    this._authService.logout();
+    this._router.push('/auth/login');
   }
 }

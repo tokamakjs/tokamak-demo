@@ -4,7 +4,6 @@ import { z } from 'zod';
 export const ProjectSchema = z.object({
   id: z.string(),
   title: z.string(),
-  description: z.string(),
 });
 
 export class Project extends ze.ClassFrom(ProjectSchema) {

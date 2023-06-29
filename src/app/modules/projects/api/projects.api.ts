@@ -9,30 +9,30 @@ const fakeProjects = [
   {
     id: '1',
     title: 'Foo project',
-    description: 'Nullam eget orci pellentesque massa lacinia dapibus in sit amet nunc.',
   },
   {
     id: '2',
     title: 'Bar project',
-    description: 'Sed tincidunt justo vitae risus ullamcorper ullamcorper. Nulla tristique.',
   },
 ];
 
 @Injectable()
 export class ProjectsApi {
   public async createProject(title: string): Promise<Project> {
-    await delay(1000);
-    return Project.fromJson({ id: (fakeProjects.length + 1).toString(), title, tasks: [] });
+    await delay(500);
+    const p = Project.fromJson({ id: (fakeProjects.length + 1).toString(), title, tasks: [] });
+    fakeProjects.push(p);
+    return p;
   }
 
   public async fetchAll(): Promise<Array<Project>> {
-    await delay(1000);
+    await delay(500);
     const projects = fakeProjects;
     return projects.map((p) => Project.fromJson(p));
   }
 
   public async fetchProject(id: string): Promise<Project> {
-    await delay(1000);
+    await delay(500);
     const project = fakeProjects.find((p) => p.id === id);
 
     if (project == null) {

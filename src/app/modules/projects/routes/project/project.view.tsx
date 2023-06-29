@@ -1,19 +1,26 @@
+import { HomeOutlined } from '@mui/icons-material';
 import {
   Box,
+  Breadcrumbs,
   Button,
   Card,
   CardContent,
+  Checkbox,
+  CircularProgress,
+  Container,
   FormControl,
   FormLabel,
   Input,
   Link,
   ModalClose,
   ModalDialog,
+  Sheet,
   Typography,
 } from '@mui/joy';
 import Modal from '@mui/joy/Modal';
 import { Link as A, useController, useState } from '@tokamakjs/react';
 
+import { AppBar } from '../../components/AppBar';
 import { ProjectController } from './project.controller';
 
 interface ProjectViewProps {}
@@ -24,54 +31,63 @@ export const ProjectView = ({}: ProjectViewProps) => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [updatingTasks, setUpdatingTasks] = useState([] as Array<string>);
 
   return (
     <>
-      <Box
-        sx={() => ({
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          m: 10,
-        })}>
-        <Box
-          sx={() => ({
-            width: 800,
-          })}>
+      <AppBar onClickLogout={() => ctrl.logout()} />
+      <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', my: 5 }}>
+        <Container>
           {ctrl.isLoading ? (
-            'Loading...'
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 4 }}>
+              <CircularProgress />
+            </Box>
           ) : (
             <>
-              <Box
-                sx={() => ({
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                })}>
-                <Typography level="h1">Project: {ctrl.project!.title}</Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography level="h1">{ctrl.project!.title}</Typography>
+                <Button onClick={() => setIsDialogVisible(true)}>Add Task</Button>
               </Box>
-              <Box sx={() => ({ my: 4 })}>
+              <Box sx={{ my: 4 }}>
                 {ctrl.tasks.map((t) => (
-                  <Card
+                  <Sheet
                     key={t.id}
                     variant="outlined"
-                    sx={() => ({ my: 2, cursor: 'pointer' })}
-                    onClick={() => (t.done ? ctrl.uncheckTask(t.id) : ctrl.checkTask(t.id))}>
+                    sx={{ my: 2, cursor: 'pointer', p: 2, borderRadius: 'sm' }}
+                    onClick={async () => {
+                      setUpdatingTasks((tasks) => [...new Set([...tasks, t.id])]);
+                      t.done ? await ctrl.uncheckTask(t.id) : await ctrl.checkTask(t.id);
+                      setUpdatingTasks((tasks) => {
+                        const n = new Set([...tasks, t.id]);
+                        n.delete(t.id);
+                        return [...n];
+                      });
+                    }}>
                     <CardContent>
-                      {t.done ? 'Done' : 'Pending'} {t.title}
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {updatingTasks.includes(t.id) ? (
+                          <CircularProgress size="sm" />
+                        ) : (
+                          <Checkbox checked={t.done} />
+                        )}
+                        <Typography
+                          sx={{
+                            marginLeft: 2,
+                            textDecoration: t.done ? 'line-through' : undefined,
+                          }}>
+                          {t.title}
+                        </Typography>
+                      </Box>
                     </CardContent>
-                  </Card>
+                  </Sheet>
                 ))}
-              </Box>
-              <Box sx={() => ({ my: 4 })}>
-                <Button onClick={() => setIsDialogVisible(true)}>Add Task</Button>
               </Box>
               <Link>
                 <A href="/projects">Go back</A>
               </Link>
             </>
           )}
-        </Box>
+        </Container>
       </Box>
       <Modal open={isDialogVisible} onClose={() => setIsDialogVisible(false)}>
         <ModalDialog>
