@@ -1,6 +1,5 @@
 import { Box, Link, Typography } from '@mui/joy';
 import { Catch, ErrorHandler } from '@tokamakjs/common';
-import { Link as A } from '@tokamakjs/react';
 import React, { ReactNode } from 'react';
 
 import { NotFoundError } from '../errors/not-found.error';
@@ -22,9 +21,7 @@ export class NotFoundErrorHandler implements ErrorHandler<NotFoundError> {
           <Typography level="h2">Not Found</Typography>
           <Typography level="body1">There should've been something here.</Typography>
           <Box sx={{ my: 1 }}>
-            <Link component={A} href="/projects">
-              Go Home
-            </Link>
+            <Link href="/projects">Go Home</Link>
           </Box>
         </Box>
       </Box>
