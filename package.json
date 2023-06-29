@@ -22,6 +22,7 @@
     "@tokamakjs/common": "^0.7.6",
     "@tokamakjs/injection": "^0.7.0",
     "@tokamakjs/react": "^0.7.7",
+    "axios": "^1.4.0",
     "class-transformer": "^0.5.1",
     "framer-motion": "^10.12.16",
     "immer": "^10.0.2",
@@ -30,6 +31,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
+    "react-query": "^3.39.3",
     "rxjs": "^7.8.1",
     "uuid": "^9.0.0",
     "zod": "^3.21.4"
